@@ -1,0 +1,233 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"make - build",
+					""
+				],
+				[
+					"make - clean",
+					""
+				],
+				[
+					"make - run",
+					""
+				],
+				[
+					"Packages/C++/C Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"make - run",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"settings",
+				"Preferences: Settings"
+			],
+			[
+				"edit",
+				"PackageDev: Edit Current Color Scheme"
+			],
+			[
+				"select color",
+				"UI: Select Color Scheme"
+			],
+			[
+				"select",
+				"UI: Select Theme"
+			],
+			[
+				"ui slec",
+				"UI: Select Theme"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"keyb",
+				"Preferences: Key Bindings"
+			],
+			[
+				"select ui",
+				"UI: Select Theme"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/emanuel/dev/understand-the-machine/src/main.c",
+		"/C/Users/emanuel/dev/understand-the-machine/build.bat",
+		"/C/Users/emanuel/dev/understand-the-machine/understand-the-machine.sublime-project",
+		"/C/Users/emanuel/dev/ergz-blog/netlify.toml",
+		"/C/Users/emanuel/dev/ergz-blog/content/posts/hello-world.md",
+		"/C/Users/emanuel/dev/ergz-blog/config.yaml",
+		"/C/Users/emanuel/dev/ergz-blog/content/hello-world.md",
+		"/C/Users/emanuel/STM32Cube/Repository/STM32Cube_FW_F0_V1.11.3/Drivers/STM32F0xx_HAL_Driver/README.md",
+		"/C/Users/emanuel/learning/3d-graphics/3drenderer/Makefile",
+		"/C/Users/emanuel/learning/3d-graphics/3drenderer/src/main.c",
+		"/C/Users/emanuel/dev/baremetal/hello.i"
+	],
+	"find":
+	{
+		"height": 29.3333333333
+	},
+	"find_in_files":
+	{
+		"height": 108.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"highlight",
+			"theme",
+			"mono",
+			"code",
+			"taxonomyTerm",
+			"328"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"incremental_find":
+	{
+		"height": 29.3333333333
+	},
+	"input":
+	{
+		"height": 40.8
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 152.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"replace":
+	{
+		"height": 54.6666666667
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"mai",
+				"src\\main.c"
+			],
+			[
+				"make",
+				"Makefile"
+			],
+			[
+				"hell",
+				"hello.i"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 206.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

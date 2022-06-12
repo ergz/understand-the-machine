@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	], 
+	"build_systems":
+	[
+		{
+			"name": "clang - build",
+			"shell_cmd": "build.bat", 
+			"working_dir": "$project_path"
+		}, 
+		{
+			"name": "clang - build and debug",
+			"shell_cmd": "build.bat & remedybg.exe remdy-debug.rdbg", 
+			"working_dir": "$project_path"
+		}
+	]
+}
