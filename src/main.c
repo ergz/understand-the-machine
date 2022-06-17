@@ -1,4 +1,27 @@
 #include <stdio.h>
+#include <stdint.h>
+
+#define asreal(x) (*((float *) &x))
+
+typedef uint32_t real;
+
+void fpadd(real left, real right, real* dest);
+
+void fpsub(real left, real right, real* dest) 
+{
+    right = right ^ 0x80000000; // negate the right operand
+    fpadd(left, right, dest); // fpadd does all the work
+}
+
+inline int extract_sign(real from) 
+{
+    return (from >> 31);
+}
+
+inline extract_exponent(real from) 
+{
+    return ((from >> 23) & 0xff) - 127;
+}
 
 int main(void)
 {
