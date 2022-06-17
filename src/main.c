@@ -31,8 +31,9 @@ inline int extract_mantisa(real from)
 
 void shift_and_round(uint32_t* val_to_shift, int bit_to_shift)
 {
-    static unsigned mask[24] = {
-        
+    static unsigned masks[24] = {
+        0, 1, 3, 7, 0xf, 0x1f, 0x3f, 0x7f,
+
     }
 }
 
