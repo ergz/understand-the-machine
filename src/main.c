@@ -18,9 +18,22 @@ inline int extract_sign(real from)
     return (from >> 31);
 }
 
-inline extract_exponent(real from) 
+inline int extract_exponent(real from) 
 {
     return ((from >> 23) & 0xff) - 127;
+}
+
+inline int extract_mantisa(real from) 
+{
+    if ((from & 0x7fffffff) == 0) return 0;
+    return ((from ))
+}
+
+void shift_and_round(uint32_t* val_to_shift, int bit_to_shift)
+{
+    static unsigned mask[24] = {
+        
+    }
 }
 
 int main(void)
