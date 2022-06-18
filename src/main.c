@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <assert.h>
 
 #define asreal(x) (*((float *) &x))
 
@@ -12,6 +13,8 @@ void fpsub(real left, real right, real* dest)
     right = right ^ 0x80000000; // negate the right operand
     fpadd(left, right, dest); // fpadd does all the work
 }
+
+
 
 inline int extract_sign(real from) 
 {
@@ -26,15 +29,40 @@ inline int extract_exponent(real from)
 inline int extract_mantisa(real from) 
 {
     if ((from & 0x7fffffff) == 0) return 0;
-    return ((from ))
+    // return ((from ))
+    return(0);
 }
 
-void shift_and_round(uint32_t* val_to_shift, int bit_to_shift)
+void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
 {
     static unsigned masks[24] = {
         0, 1, 3, 7, 0xf, 0x1f, 0x3f, 0x7f,
+        0xff, 0x1ff, 0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff,
+        0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff, 0x1fffff, 0x3fffff, 0x7fffff,
+        
+    };
 
+    static unsigned HO_mask[24] = {
+        0, 1, 2, 4, 0x8, 0x10, 0x20, 0x40, 0x80,
+        0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000,
+        0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000
+    };
+
+    int shifted_out;
+
+    assert(bits_to_shift <= 23);
+
+    shifted_out = *val_to_shift & masks[bits_to_shift];
+
+    *val_to_shift = *val_to_shift >> bits_to_shift;
+
+    if (shifted_out > HO_mask[bits_to_shift]) {
+        *val_to_shift = *val_to_shift + 1;
+    } 
+    else if (shifted_out == HO_mask[bits_to_shift]) {
+        *val_to_shift = *val_to_shift + (*val_to_shift & 1);
     }
+
 }
 
 int main(void)
