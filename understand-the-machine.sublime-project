@@ -10,7 +10,8 @@
 		{
 			"name": "clang - build",
 			"shell_cmd": "build.bat", 
-			"working_dir": "$project_path"
+			"working_dir": "$project_path", 
+			"file_regex": "^(.+):([0-9]*):([0-9]*):(.*)$",
 		}, 
 		{
 			"name": "clang - build and debug",
