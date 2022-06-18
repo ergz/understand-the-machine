@@ -48,10 +48,30 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
         0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000
     };
 
+
+    // store the value that will be shifted out here
     int shifted_out;
 
+    // since we are doing a single precission floating point
+    // value we can only shift max 23 bits
     assert(bits_to_shift <= 23);
+    
+    /*
+    to get the value that will be shifted it out we mask 
+    the value to shift with a value that will give us the 
+    correct shift, for example:
+    
+    suppose we have the value 0000_1011 and we want to shift
+    to the right by 3, so >> 3. We use the mask array above 
+    indexed at 3 whic is 7, in binary representation this is:
 
+    0000_00111 and so if we can mask our value to shift with this
+
+    0000_1011 &
+    0000_0111 
+    -----------
+    0000_0011 <----- this is the value to be shifted out 
+    */
     shifted_out = *val_to_shift & masks[bits_to_shift];
 
     *val_to_shift = *val_to_shift >> bits_to_shift;
