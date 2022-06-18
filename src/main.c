@@ -35,6 +35,21 @@ inline int extract_mantisa(real from)
 
 void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
 {
+
+    /*
+    This array give us the following table for mask lookups:
+
+    MASK INDEX | MASK VALUE
+    -----------------------
+    0           0000_0000
+    1           0000_0001 
+    3           0000_0011
+    7           0000_0111
+    0xf         0000_1111
+    -----------------------
+    and so on until we cover the 23 bits possible to shift
+    */
+
     static unsigned masks[24] = {
         0, 1, 3, 7, 0xf, 0x1f, 0x3f, 0x7f,
         0xff, 0x1ff, 0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff,
@@ -42,6 +57,19 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
         
     };
 
+    /*
+    This mask array give us the following:
+    MASK        | BINARY
+    ------------------------
+    0            0000_0000
+    1            0000_0001
+    2            0000_0010
+    4            0000_0100         
+    0x8          0000_1000
+    0x10         0001_0000
+    ------------------------
+    and so on. 
+    */
     static unsigned HO_mask[24] = {
         0, 1, 2, 4, 0x8, 0x10, 0x20, 0x40, 0x80,
         0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000,
@@ -58,8 +86,8 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
     
     /*
     to get the value that will be shifted it out we mask 
-    the value to shift with a value that will give us the 
-    correct shift, for example:
+    the value to be shifted with a value that will give us
+    this value as a result, for example:
     
     suppose we have the value 0000_1011 and we want to shift
     to the right by 3, so >> 3. We use the mask array above 
@@ -74,9 +102,22 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
     */
     shifted_out = *val_to_shift & masks[bits_to_shift];
 
+    // perform the shift, only after we have stored the 
+    // value that go shifted out
     *val_to_shift = *val_to_shift >> bits_to_shift;
 
+
+    /*
+    Based on the IEEE standards we do following to determine how to round:
+
+    1. if the last bit shifted out was a 1 and there was at least one other 1 in the 
+        bits shifted out then increment the mantisa by 1
+    2. if the last bit shifted out was a 1 and all the other bits in the shift were
+        zero then round the mantisa up by 1 if the mantisas LO bit contains a 1.
+    */
     if (shifted_out > HO_mask[bits_to_shift]) {
+
+        // if the HO of the shifted out value 
         *val_to_shift = *val_to_shift + 1;
     } 
     else if (shifted_out == HO_mask[bits_to_shift]) {
