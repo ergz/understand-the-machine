@@ -39,13 +39,13 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
     /*
     This array give us the following table for mask lookups:
 
-    MASK INDEX | MASK VALUE
-    -----------------------
-    0           0000_0000
-    1           0000_0001 
-    3           0000_0011
-    7           0000_0111
-    0xf         0000_1111
+    MASK INDEX | MASK VALUE | MASK BINARYVALUE
+    ---------------------------------------------
+    0            0           0000_0000
+    1            1           0000_0001 
+    2            3           0000_0011
+    3            7           0000_0111
+    4            0xf         0000_1111
     -----------------------
     and so on until we cover the 23 bits possible to shift
     */
@@ -59,15 +59,15 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
 
     /*
     This mask array give us the following:
-    MASK        | BINARY
-    ------------------------
-    0            0000_0000
-    1            0000_0001
-    2            0000_0010
-    4            0000_0100         
-    0x8          0000_1000
-    0x10         0001_0000
-    ------------------------
+    MASK INDEX    |    MASK VALUE  | BINARY
+    -----------------------------------------------
+    0                    0            0000_0000
+    1                    1            0000_0001
+    2                    2            0000_0010
+    3                    4            0000_0100         
+    4                    0x8          0000_1000
+    5                    0x10         0001_0000
+    ------------------------------------------------
     and so on. 
     */
     static unsigned HO_mask[24] = {
@@ -100,6 +100,7 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
     -----------
     0000_0011 <----- this is the value to be shifted out 
     */
+    
     shifted_out = *val_to_shift & masks[bits_to_shift];
 
     // perform the shift, only after we have stored the 
@@ -114,20 +115,31 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
         bits shifted out then increment the mantisa by 1
     2. if the last bit shifted out was a 1 and all the other bits in the shift were
         zero then round the mantisa up by 1 if the mantisas LO bit contains a 1.
+
+    
+    building on the previous example we want to shift (to the right) the value: 0000_1011
+    we obtain the value shifted out by masking this with 0000_0111 therefore the value 
+    to be shifted out is: 0000_0011
+
     */
     if (shifted_out > HO_mask[bits_to_shift]) {
 
-        // if the HO of the shifted out value 
+        // to test whether the values shifted out contained a 1 and AT LEAST one other
+        // one in the shifted out bits, we can simply test whether the shifted out value is larger
+        // than HO mask value, this can only be true if in fact the shifted out value contained 
+        // a 1 in HO bit and an additional 1 somewhere in the remaining shifted out bits 
         *val_to_shift = *val_to_shift + 1;
     } 
     else if (shifted_out == HO_mask[bits_to_shift]) {
         *val_to_shift = *val_to_shift + (*val_to_shift & 1);
     }
 
+
 }
 
 int main(void)
 {
+
 
     printf("Bit operations -----------------------------\n");
     // printf("--------------------------------------------\n");
