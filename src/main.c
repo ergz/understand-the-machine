@@ -137,6 +137,33 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
 
 }
 
+inline real pack_fp(int sign, int exponent, int mantisa) 
+{
+    return(
+        (real)
+        (
+            (sign << 31) |
+            ((exponent + 127) << 23) | 
+            (mantisa & 0x7fffff)
+        ));
+}
+
+void fpadd(real left, real right, real* dest)
+{
+    int         left_exponent;
+    uint32_t    left_mantissa;
+    int         left_sign;
+
+    int         right_exponent;
+    uint32_t    right_mantissa;
+    int         right_sign;
+
+    int         dest_exponent;
+    uint32_t    dest_mantissa;
+    int         dest_sign;
+
+}
+
 int main(void)
 {
 
