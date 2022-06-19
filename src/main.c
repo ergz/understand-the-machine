@@ -162,6 +162,40 @@ void fpadd(real left, real right, real* dest)
     uint32_t    dest_mantissa;
     int         dest_sign;
 
+
+    left_exponent = extract_exponent(left);
+    left_mantissa = extract_mantisa(left);
+    left_sign = extract_sign(left);
+    
+    right_exponent = extract_exponent(right);
+    right_mantissa = extract_mantisa(right);
+    right_sign = extract_sign(right);
+    
+    // handle the inifinity cases
+    if (left_exponent == 127) { // exponent = 0
+
+        if (left_mantissa == 0) {
+            // 0.0000^0
+
+            if (right_exponent == 127) { // exponent = 0
+
+                if (right_mantissa == 0) {
+                    
+                    if (left_sign == right_sign) {
+                        *dest = right;
+                    }
+                    else {
+                        *dest = 0x7fc00000;
+                    }
+                }
+                else {
+                    *dest = right;
+                }
+            }
+        }
+    }
+
+
 }
 
 int main(void)
