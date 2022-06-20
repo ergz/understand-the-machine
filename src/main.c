@@ -150,6 +150,7 @@ inline real pack_fp(int sign, int exponent, int mantisa)
 
 void fpadd(real left, real right, real* dest)
 {
+    // extrasct different components of the real value inputs into our addition function
     int         left_exponent;
     uint32_t    left_mantissa;
     int         left_sign;
@@ -162,7 +163,6 @@ void fpadd(real left, real right, real* dest)
     uint32_t    dest_mantissa;
     int         dest_sign;
 
-
     left_exponent = extract_exponent(left);
     left_mantissa = extract_mantisa(left);
     left_sign = extract_sign(left);
@@ -171,28 +171,49 @@ void fpadd(real left, real right, real* dest)
     right_mantissa = extract_mantisa(right);
     right_sign = extract_sign(right);
     
-    // handle the inifinity cases
-    if (left_exponent == 127) { // exponent = 0
+    // Inifinity Cases ----------------------------------------------
+    /*
+    infinity: when the exponent contains all 1 buts, and the matissa contails all 0's
+    then we either have +inf or -inf depending on the sign bit
+
+    From wiki: 
+    0 11111111 000000000000000000000002 = 7f80 000016 = infinity
+    1 11111111 000000000000000000000002 = ff80 000016 = −infinity
+    */
+    if (left_exponent == 127) { // all the bits are 1's 
 
         if (left_mantissa == 0) {
-            // 0.0000^0
+            // if the corresponding mantissa is zero, then we have an infinity 
+            // either + or - depending on the sign bit
 
-            if (right_exponent == 127) { // exponent = 0
+            if (right_exponent == 127) { 
 
                 if (right_mantissa == 0) {
-                    
+                    // if the correpodning right mantissa is all zeros then we have 
+                    // either + or - inf.
                     if (left_sign == right_sign) {
+
                         *dest = right;
-                    }
+                    } 
                     else {
-                        *dest = 0x7fc00000;
+                        *dest = 0x7fc00000; // NAN
                     }
                 }
                 else {
-                    *dest = right;
+                    *dest = right; // its some type of NAN since it has all 1's in the exponent and at least one 
+                                    // position on the mantissa in non-zero
                 }
             }
         }
+        else {
+            *dest = left; // propogate the NAN
+        }
+
+        return; 
+    }
+    else if (right_exponent == 127) {
+        *dest = right;
+        return;
     }
 
 
