@@ -217,6 +217,62 @@ void fpadd(real left, real right, real* dest)
     }
 
 
+    // Actual number addition ------------------------------------------
+
+    /*
+    In order to add the two values we must first make sure that their 
+    exponents are the same, if they are not we will shift (denormalize) the 
+    smaller of the two values and do the appropriate rounding.
+    */
+    dest_exponent = right_exponent;
+
+    if (right_exponent > left_exponent) {
+        shift_and_round(&left_mantissa, (right_exponent - left_exponent));
+    } 
+    else if (right_exponent < left_exponent) {
+        shift_and_round(&right_mantissa, (left_exponent - right_exponent));
+        dest_exponent = left_exponent;
+    }
+
+    if (right_sign ^ left_sign) { // XOR is true only if the sign are different
+        if (left_mantissa > right_mantissa) {
+            dest_mantissa = right_mantissa - left_mantissa;
+            dest_sign = left_sign;
+        }
+        else {
+            dest_mantissa = left_mantissa - right_mantissa;
+            dest_sign = right_sign;
+        }
+    }
+    else {
+        dest_sign = left_sign;
+        dest_mantissa = left_mantissa + right_mantissa;
+    }
+
+    // Normalize the result --------------------------------------
+
+    // when overflow happens during addition
+    if (dest_mantissa >= 0x1000000) {
+        shift_and_round(&dest_mantissa, 1);
+        ++dest_exponent;
+    }
+    else {
+
+        if (dest_mantissa != 0) {
+            while ((dest_mantissa < 0x800000) && (dest_exponent > -127)) {
+                dest_mantissa = dest_mantissa << 1;
+                --dest_exponent;
+            }
+        }
+        else {
+            dest_sign = 0;
+            dest_exponent = 0;
+        }
+    }
+
+    *dest = pack_fp(dest_sign, dest_exponent, dest_mantissa);
+
+
 }
 
 int main(void)
@@ -263,6 +319,17 @@ int main(void)
     printf("the value of the third_field is: %u\n", third_field);
     printf("the value of the first_field is: %u\n", first_field);
 
+    printf("---------------------------------------------\n");
+    printf("Real value stuff");
+
+    real l, r, d;
+
+    asreal(l) = 1.0;
+    asreal(r) = 2.0;
+
+    fpadd(l, r, &d);
+
+    printf("dest = %x\n", d);
 
     return(0);
 }
