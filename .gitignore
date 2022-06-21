@@ -2,3 +2,5 @@
 *.rdbg
 *.pdb
 *workspace
+*.sublime-workspace
+*.ilk
