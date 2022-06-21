@@ -50,7 +50,8 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
     and so on until we cover the 23 bits possible to shift
     */
 
-    static unsigned masks[24] = {
+    static unsigned masks[24] = 
+    {
         0, 1, 3, 7, 0xf, 0x1f, 0x3f, 0x7f,
         0xff, 0x1ff, 0x3ff, 0x7ff, 0xfff, 0x1fff, 0x3fff, 0x7fff,
         0xffff, 0x1ffff, 0x3ffff, 0x7ffff, 0xfffff, 0x1fffff, 0x3fffff, 0x7fffff,
@@ -70,7 +71,8 @@ void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
     ------------------------------------------------
     and so on. 
     */
-    static unsigned HO_mask[24] = {
+    static unsigned HO_mask[24] = 
+    {
         0, 1, 2, 4, 0x8, 0x10, 0x20, 0x40, 0x80,
         0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000,
         0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000
