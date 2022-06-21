@@ -324,7 +324,7 @@ int main(int argc, char* argv[])
 
     real l, r, d;
 
-    asreal(l) = 1.1; // changing the pointer to be of float type
+    asreal(l) = 1.3; // changing the pointer to be of float type
     asreal(r) = 2.7; // changing the pointer to be of float type
     fpadd(l, r, &d);
 
