@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <assert.h>
 
-#define asreal(x) (*((float *) &x))
+#define asreal(x) (*( ( float* ) &x ) )
 
 typedef uint32_t real;
 
@@ -274,10 +274,9 @@ void fpadd(real left, real right, real* dest)
 
     *dest = pack_fp(dest_sign, dest_exponent, dest_mantissa);
 
-
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
 
 
@@ -322,16 +321,21 @@ int main(void)
     printf("the value of the first_field is: %u\n", first_field);
 
     printf("---------------------------------------------\n");
-    printf("Real value stuff");
+    printf("Real value stuff\n");
 
     real l, r, d;
 
-    asreal(l) = 1.0;
-    asreal(r) = 2.0;
-
+    asreal(l) = 1.0; // changing the pointer to be of float type
+    asreal(r) = 2.0; // changing the pointer to be of float type
     fpadd(l, r, &d);
 
-    printf("dest = %x\n", d);
+    printf("left:           0x%X    se: %E\n", l, asreal(l));
+    printf("right:          0x%X    se: %E +\n", r, asreal(r));
+
+    printf("                ----------------------------------\n");
+
+    printf("dest:           0x%X    se: %E\n", d, asreal(d));
 
     return(0);
 }
+
