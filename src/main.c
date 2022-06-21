@@ -29,8 +29,7 @@ inline int extract_exponent(real from)
 inline int extract_mantisa(real from) 
 {
     if ((from & 0x7fffffff) == 0) return 0;
-    // return ((from ))
-    return(0);
+    return ((from & 0x7fffff) | 0x800000);
 }
 
 void shift_and_round(uint32_t* val_to_shift, int bits_to_shift)
