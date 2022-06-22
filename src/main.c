@@ -2,7 +2,21 @@
 #include <stdint.h>
 #include <assert.h>
 
+
+/* 
+what does this macro do, here are the steps that are happening and why
+we can call like we do below (asreal) = 1.0;
+
+1. define x to be type real (uint32_t)      // uint32_t x;
+2. next we cast this to be float pointer    // (float*) &x;
+3. last we dereference to assign it a value // *x = 1.0;
+
+I don't know why but this was confusing, also why isn't this
+just a regular function?
+
+*/
 #define asreal(x) (*( ( float* ) &x ) )
+
 
 typedef uint32_t real;
 
